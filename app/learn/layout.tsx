@@ -23,7 +23,7 @@ export default async function LearnLayout({
   return (
     <div className="min-h-screen bg-background">
       <DashboardNav user={user} profile={profile} />
-      <main className="pt-16">
+      <main className="lg:ml-[280px] pt-16 min-h-screen">
         {children}
       </main>
     </div>
