@@ -8,8 +8,15 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Adelante - Learn real life before it hits you",
-  description: "Adelante helps you prepare for real life by teaching essential skills like money management, housing, transportation, taxes, and career planning.",
+  title: "Adelante Pathways - Learn real life before it hits you",
+  description: "Adelante Pathways prepares first-generation students and families for life transitions with practical skills in money management, housing, taxes, investing, career planning, and more. Your bridge to real-world readiness.",
+  keywords: ["life skills", "financial literacy", "first generation", "education", "budgeting", "taxes", "career planning"],
+  authors: [{ name: "Adelante Pathways" }],
+  openGraph: {
+    title: "Adelante Pathways",
+    description: "Learn real life before it hits you. Prepare for adulthood with essential life skills.",
+    type: "website",
+  },
 }
 
 export default function RootLayout({

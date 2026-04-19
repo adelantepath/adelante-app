@@ -4,25 +4,30 @@
   --font-sans: 'Inter', 'Inter Fallback', system-ui, sans-serif;
   --font-mono: 'Fira Code', monospace;
   
-  --color-background: #fafafa;
-  --color-foreground: #0a0a0a;
+  /* Purple-based color scheme for Adelante Pathways */
+  --color-background: #faf8fc;
+  --color-foreground: #1a1625;
   --color-card: #ffffff;
-  --color-card-foreground: #0a0a0a;
+  --color-card-foreground: #1a1625;
   --color-popover: #ffffff;
-  --color-popover-foreground: #0a0a0a;
-  --color-primary: #0d9488;
+  --color-popover-foreground: #1a1625;
+  --color-primary: #7c3aed;
   --color-primary-foreground: #ffffff;
-  --color-secondary: #f4f4f5;
-  --color-secondary-foreground: #18181b;
-  --color-muted: #f4f4f5;
-  --color-muted-foreground: #71717a;
-  --color-accent: #f4f4f5;
-  --color-accent-foreground: #18181b;
+  --color-secondary: #f3e8ff;
+  --color-secondary-foreground: #5b21b6;
+  --color-muted: #f5f3ff;
+  --color-muted-foreground: #6b7280;
+  --color-accent: #ede9fe;
+  --color-accent-foreground: #5b21b6;
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
-  --color-border: #e4e4e7;
-  --color-input: #e4e4e7;
-  --color-ring: #0d9488;
+  --color-border: #e9d5ff;
+  --color-input: #e9d5ff;
+  --color-ring: #7c3aed;
+  --color-success: #10b981;
+  --color-success-foreground: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-foreground: #ffffff;
   
   --radius: 0.75rem;
 }
@@ -57,12 +62,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: var(--color-primary);
   border-radius: 4px;
+  opacity: 0.5;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-muted-foreground);
+  background: var(--color-primary);
 }
 
 /* Animation utilities */
@@ -81,6 +87,11 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4); }
+  50% { box-shadow: 0 0 20px 10px rgba(124, 58, 237, 0.1); }
+}
+
 .animate-fade-in {
   animation: fade-in 0.3s ease-out forwards;
 }
@@ -91,4 +102,17 @@ body {
 
 .animate-scale-in {
   animation: scale-in 0.3s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Gradient backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+}
+
+.gradient-subtle {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
 }

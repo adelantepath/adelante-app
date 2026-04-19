@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -54,8 +55,9 @@ export function DashboardNav({ user, profile }: DashboardNavProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/dashboard" className="text-2xl font-bold text-primary">
-            Adelante
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <Image src="/logo.jpg" alt="Adelante Pathways" width={36} height={36} className="rounded-lg" />
+            <span className="text-2xl font-bold text-primary">Adelante</span>
           </Link>
 
           {/* Desktop Nav */}

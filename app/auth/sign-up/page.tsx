@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { ArrowRight, Loader2 } from 'lucide-react'
@@ -62,11 +63,12 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center p-6 bg-gradient-to-br from-teal-50 via-white to-emerald-50">
+    <div className="flex min-h-screen w-full items-center justify-center p-6 bg-gradient-to-br from-purple-50 via-white to-violet-50">
       <div className="w-full max-w-md animate-scale-in">
         <div className="mb-8 text-center">
-          <Link href="/" className="inline-block">
-            <h1 className="text-3xl font-bold text-primary">Adelante</h1>
+          <Link href="/" className="inline-flex flex-col items-center gap-3">
+            <Image src="/logo.jpg" alt="Adelante Pathways" width={64} height={64} className="rounded-xl" />
+            <h1 className="text-3xl font-bold text-primary">Adelante Pathways</h1>
           </Link>
           <p className="mt-2 text-muted-foreground">Start your journey to real-life readiness</p>
         </div>

@@ -1,18 +1,19 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { ArrowRight, BookOpen, Target, Users, TrendingUp, DollarSign, Home, Heart, Car, Briefcase, Scale, Clock, UserCheck } from 'lucide-react'
+import { ArrowRight, BookOpen, Target, Users, TrendingUp, DollarSign, Home, Heart, Car, Briefcase, Scale, Clock, UserCheck, Sparkles } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 
 const categories = [
-  { icon: DollarSign, title: 'Money & Finance', description: 'Banking, credit, taxes, investing', color: 'bg-emerald-500' },
-  { icon: Home, title: 'Housing & Living', description: 'Renting, utilities, daily life', color: 'bg-blue-500' },
-  { icon: Heart, title: 'Health & Wellness', description: 'Insurance, self-care, mental health', color: 'bg-pink-500' },
-  { icon: Car, title: 'Transportation', description: 'Driving, car ownership, insurance', color: 'bg-amber-500' },
-  { icon: Briefcase, title: 'Career & Education', description: 'Jobs, resumes, professional growth', color: 'bg-purple-500' },
+  { icon: DollarSign, title: 'Money & Finance', description: 'Banking, credit, taxes, investing', color: 'bg-violet-500' },
+  { icon: Home, title: 'Housing & Living', description: 'Renting, utilities, daily life', color: 'bg-purple-500' },
+  { icon: Heart, title: 'Health & Wellness', description: 'Insurance, self-care, mental health', color: 'bg-fuchsia-500' },
+  { icon: Car, title: 'Transportation', description: 'Driving, car ownership, insurance', color: 'bg-violet-600' },
+  { icon: Briefcase, title: 'Career & Education', description: 'Jobs, resumes, professional growth', color: 'bg-purple-600' },
   { icon: Scale, title: 'Legal & Civic', description: 'Laws, voting, contracts', color: 'bg-indigo-500' },
-  { icon: Clock, title: 'Life Management', description: 'Time, goals, problem-solving', color: 'bg-teal-500' },
-  { icon: UserCheck, title: 'Relationships', description: 'Communication, boundaries, social skills', color: 'bg-orange-500' },
+  { icon: Clock, title: 'Life Management', description: 'Time, goals, problem-solving', color: 'bg-violet-700' },
+  { icon: UserCheck, title: 'Relationships', description: 'Communication, boundaries, social skills', color: 'bg-purple-700' },
 ]
 
 const stages = [
@@ -28,11 +29,12 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <nav className="border-b border-border bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-primary">
-              Adelante
+            <Link href="/" className="flex items-center gap-2">
+              <Image src="/logo.jpg" alt="Adelante Pathways" width={40} height={40} className="rounded-lg" />
+              <span className="text-2xl font-bold text-primary">Adelante</span>
             </Link>
             <div className="flex items-center gap-4">
               {user ? (
@@ -59,16 +61,22 @@ export default async function HomePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-white to-emerald-50" />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-violet-50" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-violet-200/30 rounded-full blur-3xl" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+              <Sparkles className="h-4 w-4" />
+              AI-Powered Life Skills Platform
+            </div>
             <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 text-balance">
               Learn real life{' '}
               <span className="text-primary">before it hits you</span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8 text-pretty">
-              Adelante prepares young people for life transitions with practical skills in money management, 
-              housing, career planning, taxes, investing, and more. Powered by AI-driven simulations.
+              Adelante Pathways prepares first-generation students and families for life transitions 
+              with practical skills in money, housing, career, taxes, and more. Your bridge to real-world readiness.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild className="h-12 px-8 text-base">
@@ -82,6 +90,17 @@ export default async function HomePage() {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Mission Statement */}
+      <section className="py-16 bg-white border-y border-border">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-lg md:text-xl text-muted-foreground italic">
+            &quot;Our parents did the best they could. They had to figure things out as they went. 
+            This platform is meant to help fill those gaps - giving the next generation a head start 
+            so they feel more prepared than we did.&quot;
+          </p>
         </div>
       </section>
 
@@ -99,7 +118,7 @@ export default async function HomePage() {
           
           <div className="grid md:grid-cols-3 gap-6">
             {stages.map((stage, index) => (
-              <Card key={stage.title} className="relative overflow-hidden group hover:shadow-lg transition-shadow">
+              <Card key={stage.title} className="relative overflow-hidden group hover:shadow-lg transition-shadow border-border">
                 <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-4">
@@ -131,7 +150,7 @@ export default async function HomePage() {
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {categories.map((category) => (
-              <Card key={category.title} className="group hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer">
+              <Card key={category.title} className="group hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer border-border">
                 <CardContent className="p-6">
                   <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg ${category.color} text-white mb-4`}>
                     <category.icon className="h-6 w-6" />
@@ -226,7 +245,7 @@ export default async function HomePage() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
-            <div className="bg-white rounded-2xl p-8 shadow-xl">
+            <div className="bg-white rounded-2xl p-8 shadow-xl border border-border">
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                   <span className="font-medium">Active Students</span>
@@ -268,7 +287,10 @@ export default async function HomePage() {
       <footer className="py-12 bg-foreground text-white/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-2xl font-bold text-white">Adelante</div>
+            <div className="flex items-center gap-2">
+              <Image src="/logo.jpg" alt="Adelante Pathways" width={32} height={32} className="rounded-lg" />
+              <span className="text-xl font-bold text-white">Adelante Pathways</span>
+            </div>
             <p className="text-sm">Learn real life before it hits you.</p>
             <p className="text-sm">2024 Adelante Pathways. All rights reserved.</p>
           </div>
