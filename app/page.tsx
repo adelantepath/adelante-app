@@ -2,10 +2,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { ArrowRight, BookOpen, Target, Users, TrendingUp, DollarSign, Home, Heart, Car, Briefcase, Scale, Clock, UserCheck, Sparkles } from 'lucide-react'
+import { ArrowRight, BookOpen, Target, Users, TrendingUp, DollarSign, Home, Heart, Car, Briefcase, Scale, Clock, UserCheck, Sparkles, MessageCircle, Brain, Cpu, BarChart3, Share2, Award } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 
-const categories = [
+const coreCategories = [
   { icon: DollarSign, title: 'Money & Finance', description: 'Banking, credit, taxes, investing', color: 'bg-violet-500' },
   { icon: Home, title: 'Housing & Living', description: 'Renting, utilities, daily life', color: 'bg-purple-500' },
   { icon: Heart, title: 'Health & Wellness', description: 'Insurance, self-care, mental health', color: 'bg-fuchsia-500' },
@@ -14,6 +14,16 @@ const categories = [
   { icon: Scale, title: 'Legal & Civic', description: 'Laws, voting, contracts', color: 'bg-indigo-500' },
   { icon: Clock, title: 'Life Management', description: 'Time, goals, problem-solving', color: 'bg-violet-700' },
   { icon: UserCheck, title: 'Relationships', description: 'Communication, boundaries, social skills', color: 'bg-purple-700' },
+]
+
+const professionalCategories = [
+  { icon: TrendingUp, title: 'Sales & Entrepreneurship', description: 'Persuasion, negotiation, starting a business', color: 'bg-violet-600' },
+  { icon: Share2, title: 'Digital Marketing', description: 'Personal branding, social media, content', color: 'bg-pink-600' },
+  { icon: Cpu, title: 'Technology & AI', description: 'AI tools, tech literacy, digital skills', color: 'bg-sky-500' },
+  { icon: BarChart3, title: 'Data & Analytics', description: 'Spreadsheets, data literacy, decision-making', color: 'bg-emerald-600' },
+  { icon: MessageCircle, title: 'Communication', description: 'Presentations, writing, professional speaking', color: 'bg-amber-500' },
+  { icon: Brain, title: 'Emotional Intelligence', description: 'Self-awareness, empathy, social skills', color: 'bg-pink-500' },
+  { icon: Award, title: 'Job-Specific Skills', description: 'Certifications, career paths, industry knowledge', color: 'bg-indigo-600' },
 ]
 
 const stages = [
@@ -136,20 +146,48 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Categories Grid */}
+      {/* Core Life Skills Categories */}
       <section className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              What Do You Want to Learn?
+              Essential Life Skills
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive modules covering everything school never taught you
+              Master the fundamentals school never taught you
             </p>
           </div>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {categories.map((category) => (
+            {coreCategories.map((category) => (
+              <Card key={category.title} className="group hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer border-border">
+                <CardContent className="p-6">
+                  <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg ${category.color} text-white mb-4`}>
+                    <category.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-1">{category.title}</h3>
+                  <p className="text-sm text-muted-foreground">{category.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Professional Skills Categories */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Professional Skills for Success
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Build competitive advantages with in-demand career skills
+            </p>
+          </div>
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {professionalCategories.map((category) => (
               <Card key={category.title} className="group hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer border-border">
                 <CardContent className="p-6">
                   <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg ${category.color} text-white mb-4`}>
@@ -165,7 +203,7 @@ export default async function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-20 bg-white">
+      <section id="how-it-works" className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
