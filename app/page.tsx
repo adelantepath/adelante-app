@@ -27,9 +27,9 @@ const professionalCategories = [
 ]
 
 const stages = [
-  { title: 'Elementary to Middle', age: '10-12', description: 'Building independence, study habits, and social awareness', icon: '🎒' },
-  { title: 'Middle to High School', age: '13-15', description: 'Identity, responsibility, digital citizenship, future planning', icon: '📚' },
-  { title: 'High School to Adult', age: '16-21', description: 'Real-world mastery: finances, career, taxes, independence', icon: '🎓' },
+  { title: 'Elementary to Middle', age: '10-12', description: 'Building independence, study habits, and social awareness', emoji: '🎒' },
+  { title: 'Middle to High School', age: '13-15', description: 'Identity, responsibility, digital citizenship, future planning', emoji: '📚' },
+  { title: 'High School to Adult', age: '16-21', description: 'Real-world mastery: finances, career, taxes, independence', emoji: '🎓' },
 ]
 
 const features = [
@@ -46,20 +46,21 @@ const stats = [
   { value: '95%', label: 'Completion Rate' },
 ]
 
-export default async function HomePage() {
-  let user = null
-  
+async function getUser() {
   try {
     const supabase = await createClient()
     const { data } = await supabase.auth.getUser()
-    user = data?.user
-  } catch (_) {
-    // Supabase not configured, continue without auth
+    return data?.user || null
+  } catch {
+    return null
   }
+}
+
+export default async function HomePage() {
+  const user = await getUser()
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-white/80 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -75,7 +76,7 @@ export default async function HomePage() {
             </div>
             <div className="flex items-center gap-3">
               {user ? (
-                <Button asChild className="btn-primary-glow">
+                <Button asChild className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white shadow-lg">
                   <Link href="/dashboard">
                     Dashboard
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -86,7 +87,7 @@ export default async function HomePage() {
                   <Button variant="ghost" asChild className="hidden sm:inline-flex">
                     <Link href="/auth/login">Sign In</Link>
                   </Button>
-                  <Button asChild className="btn-primary-glow">
+                  <Button asChild className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white shadow-lg">
                     <Link href="/auth/sign-up">Get Started Free</Link>
                   </Button>
                 </>
@@ -96,36 +97,33 @@ export default async function HomePage() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="relative pt-24 pb-20 md:pt-32 md:pb-32 overflow-hidden">
-        {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-violet-50" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl animate-float" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-violet-300/20 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-200/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6 animate-fade-in">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 border border-purple-200 text-purple-700 text-sm font-medium mb-6">
                 <Sparkles className="h-4 w-4" />
                 AI-Powered Life Skills Platform
               </div>
               
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 animate-slide-up">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
                 Learn real life{' '}
                 <span className="bg-gradient-to-r from-purple-600 via-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
                   before it hits you
                 </span>
               </h1>
               
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl animate-slide-up" style={{ animationDelay: '0.1s' }}>
+              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl">
                 The life-stage operating system that prepares first-generation students and families 
                 for every transition from middle school to adulthood.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                <Button size="lg" asChild className="h-14 px-8 text-base btn-primary-glow">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Button size="lg" asChild className="h-14 px-8 text-base bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white shadow-lg shadow-purple-500/25">
                   <Link href="/auth/sign-up">
                     Start Learning Free
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -139,8 +137,7 @@ export default async function HomePage() {
                 </Button>
               </div>
 
-              {/* Social Proof */}
-              <div className="mt-10 flex items-center gap-6 justify-center lg:justify-start animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <div className="mt-10 flex items-center gap-6 justify-center lg:justify-start">
                 <div className="flex -space-x-3">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <div key={i} className="h-10 w-10 rounded-full bg-gradient-to-br from-purple-400 to-violet-500 border-2 border-white flex items-center justify-center text-white text-xs font-bold">
@@ -159,10 +156,8 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Hero Visual - Dashboard Preview */}
-            <div className="relative lg:pl-8 animate-scale-in" style={{ animationDelay: '0.2s' }}>
+            <div className="relative lg:pl-8 hidden lg:block">
               <div className="relative bg-white rounded-2xl shadow-2xl border border-border overflow-hidden">
-                {/* Mock Dashboard Header */}
                 <div className="bg-gradient-to-r from-purple-600 to-violet-600 p-6 text-white">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
@@ -178,7 +173,6 @@ export default async function HomePage() {
                   </div>
                 </div>
                 
-                {/* Mock Stats */}
                 <div className="p-4 grid grid-cols-3 gap-3">
                   <div className="bg-amber-50 rounded-xl p-3 text-center">
                     <div className="flex items-center justify-center gap-1 text-amber-600 font-bold">
@@ -203,7 +197,6 @@ export default async function HomePage() {
                   </div>
                 </div>
                 
-                {/* Mock Course Progress */}
                 <div className="px-4 pb-4">
                   <div className="bg-muted/50 rounded-xl p-4">
                     <div className="flex items-center gap-3 mb-3">
@@ -222,8 +215,7 @@ export default async function HomePage() {
                 </div>
               </div>
               
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 bg-white rounded-xl shadow-lg p-3 border border-border animate-bounce-subtle">
+              <div className="absolute -top-4 -right-4 bg-white rounded-xl shadow-lg p-3 border border-border">
                 <div className="flex items-center gap-2">
                   <div className="h-8 w-8 rounded-full bg-emerald-100 flex items-center justify-center">
                     <CheckCircle2 className="h-4 w-4 text-emerald-600" />
@@ -235,7 +227,7 @@ export default async function HomePage() {
                 </div>
               </div>
               
-              <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-3 border border-border animate-bounce-subtle" style={{ animationDelay: '0.5s' }}>
+              <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-3 border border-border">
                 <div className="flex items-center gap-2">
                   <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center">
                     <Trophy className="h-4 w-4 text-amber-600" />
@@ -251,7 +243,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Stats Bar */}
       <section className="py-8 bg-gradient-to-r from-purple-600 via-violet-600 to-purple-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -265,7 +256,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Mission Statement */}
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <blockquote className="text-xl md:text-2xl text-muted-foreground italic leading-relaxed">
@@ -283,8 +273,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-muted/30">
+      <section id="features" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -299,8 +288,8 @@ export default async function HomePage() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <Card key={feature.title} className="course-card border-2 border-transparent hover:border-primary/20 bg-white">
+            {features.map((feature) => (
+              <Card key={feature.title} className="border-2 border-transparent hover:border-purple-200 bg-white hover:shadow-lg transition-all">
                 <CardContent className="p-6">
                   <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center mb-4 shadow-lg shadow-purple-500/20">
                     <feature.icon className="h-7 w-7 text-white" />
@@ -314,7 +303,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Life Stages Section */}
       <section id="pathways" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -330,17 +318,17 @@ export default async function HomePage() {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {stages.map((stage, index) => (
-              <Card key={stage.title} className="relative overflow-hidden course-card group">
+            {stages.map((stage) => (
+              <Card key={stage.title} className="relative overflow-hidden hover:shadow-xl transition-all group">
                 <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-purple-500 to-violet-600" />
                 <CardContent className="p-8">
-                  <div className="text-5xl mb-4">{stage.icon}</div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                  <div className="text-5xl mb-4">{stage.emoji}</div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-sm font-medium mb-4">
                     Ages {stage.age}
                   </div>
                   <h3 className="text-xl font-bold mb-3">{stage.title}</h3>
                   <p className="text-muted-foreground mb-4">{stage.description}</p>
-                  <Button variant="ghost" className="p-0 h-auto text-primary group-hover:translate-x-1 transition-transform">
+                  <Button variant="ghost" className="p-0 h-auto text-purple-600 group-hover:translate-x-1 transition-transform">
                     Explore curriculum <ArrowRight className="ml-1 h-4 w-4" />
                   </Button>
                 </CardContent>
@@ -350,8 +338,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Skills Categories */}
-      <section id="skills" className="py-20 bg-gradient-to-b from-muted/30 to-white">
+      <section id="skills" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -367,9 +354,9 @@ export default async function HomePage() {
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
             {coreCategories.map((category) => (
-              <Card key={category.title} className="group cursor-pointer course-card overflow-hidden">
+              <Card key={category.title} className="group hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer border-2 border-transparent hover:border-purple-200">
                 <CardContent className="p-6">
-                  <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${category.color} text-white mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
+                  <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${category.color} text-white mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
                     <category.icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-bold text-lg mb-1">{category.title}</h3>
@@ -380,19 +367,19 @@ export default async function HomePage() {
           </div>
 
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-foreground mb-2">
-              Plus Professional Skills
+            <h3 className="text-2xl font-bold mb-2">
+              <span className="bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent">
+                Professional Skills for Success
+              </span>
             </h3>
-            <p className="text-muted-foreground">
-              Build competitive advantages with in-demand career skills
-            </p>
+            <p className="text-muted-foreground">Build competitive advantages with in-demand career skills</p>
           </div>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {professionalCategories.map((category) => (
-              <Card key={category.title} className="group cursor-pointer course-card overflow-hidden">
+              <Card key={category.title} className="group hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer border-2 border-transparent hover:border-purple-200">
                 <CardContent className="p-6">
-                  <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${category.color} text-white mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
+                  <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${category.color} text-white mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
                     <category.icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-bold text-lg mb-1">{category.title}</h3>
@@ -404,77 +391,69 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* For Organizations */}
-      <section id="organizations" className="py-20 bg-gradient-to-br from-purple-50 via-white to-violet-50">
+      <section id="organizations" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 text-purple-700 text-sm font-medium mb-6">
                 <Users className="h-4 w-4" />
-                For Educators & Organizations
+                For Schools & Organizations
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Bring Life Skills Education to{' '}
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Partner With{' '}
                 <span className="bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent">
-                  Your Students
+                  Adelante Pathways
                 </span>
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Adelante partners with schools, nonprofits, early colleges, and community programs 
-                to deliver life-skills education at scale with dashboards, progress tracking, and curriculum integration.
+                Bring life skills education to your school, nonprofit, or community program. 
+                We provide institutional dashboards, progress tracking, and curriculum support.
               </p>
-              
-              <ul className="space-y-4 mb-8">
-                {[
-                  'Manage student cohorts and track progress',
-                  'Customize learning paths for your needs',
-                  'Detailed analytics and reporting for educators',
-                  'FERPA compliant and secure',
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-3">
-                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                      <CheckCircle2 className="h-4 w-4 text-primary" />
-                    </div>
+              <div className="space-y-4 mb-8">
+                {['Custom organization dashboard', 'Student progress tracking & reports', 'Curriculum aligned to your needs', 'Dedicated support team'].map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-purple-600" />
                     <span>{item}</span>
-                  </li>
+                  </div>
                 ))}
-              </ul>
-              
-              <Button size="lg" className="btn-primary-glow">
-                Partner With Us
-                <ArrowRight className="ml-2 h-4 w-4" />
+              </div>
+              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white shadow-lg">
+                Request a Demo
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
-            
-            <div className="bg-white rounded-2xl p-8 shadow-2xl border border-border">
-              <h3 className="text-xl font-bold mb-6">Organization Dashboard</h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-violet-50 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center">
-                      <Users className="h-5 w-5 text-white" />
-                    </div>
-                    <span className="font-medium">Active Students</span>
-                  </div>
-                  <span className="text-2xl font-bold text-primary">2,847</span>
+            <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-8">
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-bold text-lg">Organization Dashboard</h3>
+                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium">Live</span>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-                      <BookOpen className="h-5 w-5 text-white" />
-                    </div>
-                    <span className="font-medium">Lessons Completed</span>
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div className="text-center p-4 bg-purple-50 rounded-lg">
+                    <p className="text-2xl font-bold text-purple-600">247</p>
+                    <p className="text-sm text-muted-foreground">Students</p>
                   </div>
-                  <span className="text-2xl font-bold text-emerald-600">18,392</span>
+                  <div className="text-center p-4 bg-violet-50 rounded-lg">
+                    <p className="text-2xl font-bold text-violet-600">89%</p>
+                    <p className="text-sm text-muted-foreground">Completion</p>
+                  </div>
+                  <div className="text-center p-4 bg-fuchsia-50 rounded-lg">
+                    <p className="text-2xl font-bold text-fuchsia-600">4.8</p>
+                    <p className="text-sm text-muted-foreground">Rating</p>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-                      <TrendingUp className="h-5 w-5 text-white" />
+                <div className="space-y-3">
+                  {['Financial Literacy', 'Career Readiness', 'Life Management'].map((course, i) => (
+                    <div key={course} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <span className="font-medium">{course}</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 h-2 bg-purple-100 rounded-full overflow-hidden">
+                          <div className="h-full bg-gradient-to-r from-purple-500 to-violet-500 rounded-full" style={{ width: `${85 - i * 15}%` }} />
+                        </div>
+                        <span className="text-sm text-muted-foreground">{85 - i * 15}%</span>
+                      </div>
                     </div>
-                    <span className="font-medium">Avg Completion Rate</span>
-                  </div>
-                  <span className="text-2xl font-bold text-amber-600">87%</span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -482,69 +461,66 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-purple-600 via-violet-600 to-purple-700 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z\" fill=\"rgba(255,255,255,0.07)\"%3E%3C/path%3E%3C/svg%3E')] opacity-50" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Ready to prepare for real life?
-          </h2>
-          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-            Join thousands of learners building essential life skills. 
-            Free to start, powerful to master.
+      <section className="py-20 bg-gradient-to-r from-purple-600 via-violet-600 to-purple-700 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Move Forward?</h2>
+          <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
+            Join thousands of learners building the skills they need for real-world success. 
+            Start your journey today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild className="h-14 px-8 text-base font-semibold">
+            <Button size="lg" asChild className="h-14 px-10 text-base bg-white text-purple-600 hover:bg-gray-100 shadow-lg">
               <Link href="/auth/sign-up">
-                Create Your Free Account
+                Get Started Free
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
+            <Button size="lg" variant="outline" asChild className="h-14 px-10 text-base border-2 border-white text-white hover:bg-white/10">
+              <Link href="#organizations">
+                For Organizations
+              </Link>
+            </Button>
           </div>
-          <p className="mt-6 text-sm text-white/60">
-            No credit card required. Start learning in minutes.
-          </p>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-16 bg-foreground text-white">
+      <footer className="py-12 bg-gray-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-12 mb-12">
-            <div className="md:col-span-2">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
               <div className="flex items-center gap-3 mb-4">
                 <Image src="/logo.jpg" alt="Adelante Pathways" width={40} height={40} className="rounded-xl" />
-                <span className="text-2xl font-bold">Adelante Pathways</span>
+                <span className="text-xl font-bold">Adelante</span>
               </div>
-              <p className="text-white/60 mb-6 max-w-md">
-                The life-stage operating system that prepares first-generation students 
-                and families for real-world success.
-              </p>
-              <p className="text-sm text-white/40">
-                Learn real life before it hits you.
-              </p>
+              <p className="text-gray-400">Learn real life before it hits you. Preparing the next generation for success.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Platform</h4>
-              <ul className="space-y-3 text-white/60">
-                <li><Link href="#features" className="hover:text-white transition-colors">Features</Link></li>
-                <li><Link href="#pathways" className="hover:text-white transition-colors">Pathways</Link></li>
-                <li><Link href="#skills" className="hover:text-white transition-colors">Skills</Link></li>
-                <li><Link href="/auth/sign-up" className="hover:text-white transition-colors">Get Started</Link></li>
-              </ul>
+              <div className="space-y-2 text-gray-400">
+                <p><Link href="#features" className="hover:text-white transition-colors">Features</Link></p>
+                <p><Link href="#pathways" className="hover:text-white transition-colors">Life Stages</Link></p>
+                <p><Link href="#skills" className="hover:text-white transition-colors">Skills</Link></p>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Resources</h4>
+              <div className="space-y-2 text-gray-400">
+                <p><Link href="#organizations" className="hover:text-white transition-colors">For Organizations</Link></p>
+                <p><Link href="/support" className="hover:text-white transition-colors">Support</Link></p>
+                <p><Link href="/ai-coach" className="hover:text-white transition-colors">AI Coach</Link></p>
+              </div>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-3 text-white/60">
-                <li><Link href="#" className="hover:text-white transition-colors">About</Link></li>
-                <li><Link href="#organizations" className="hover:text-white transition-colors">For Schools</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Contact</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Privacy</Link></li>
-              </ul>
+              <div className="space-y-2 text-gray-400">
+                <p><Link href="#" className="hover:text-white transition-colors">About Us</Link></p>
+                <p><Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link></p>
+                <p><Link href="#" className="hover:text-white transition-colors">Terms of Service</Link></p>
+              </div>
             </div>
           </div>
-          <div className="pt-8 border-t border-white/10 text-center text-sm text-white/40">
-            <p>2024 Adelante Pathways. All rights reserved.</p>
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
+            <p>© {new Date().getFullYear()} Adelante Pathways. All rights reserved.</p>
           </div>
         </div>
       </footer>
